@@ -25,7 +25,6 @@ function Register() {
         setUsers((pre) =>{
             return  [...pre, {...data,id:uuidv4()}]
         })
-        // console.log(users)
         setData({
             role:"",
             fname: "",
