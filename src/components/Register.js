@@ -1,0 +1,115 @@
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
+import { v4 as uuidv4 } from 'uuid';
+
+function Register() {
+    const [data, setData] = useState({
+        role:"",
+        fname: "",
+        lname: "",
+        email: "",
+        contact: "",
+        Department: "",
+        username: "",
+        password: ""
+    })
+    const navigate = useNavigate()
+    const [users, setUsers] = useState(()=> JSON.parse(localStorage.getItem("users")) || []
+    )
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData((pre) => ({ ...pre, [name]: value })) 
+    }
+    const handleRegister = (e) => {
+        e.preventDefault();
+        setUsers((pre) =>{
+            return  [...pre, {...data,id:uuidv4()}]
+        })
+        // console.log(users)
+        setData({
+            role:"",
+            fname: "",
+            lname: "",
+            email: "",
+            contact: "",
+            Department: "",
+            username: "",
+            password: ""
+        })
+    }
+    useEffect(() => {
+        localStorage.setItem("users", JSON.stringify(users))
+    }, [users])
+    
+    return (
+        <>
+            <div className="container p-5">
+                <form onSubmit={handleRegister}>
+                    <div className='row'>
+                        <div className="col-md-8 offset-2 border   border-bottom-0 pt-3">
+                            <div className="form-group ">
+                                <input onClick={handleChange} type="radio" name="role" value='HOD' id='HOD' className='ml-3' required/>
+                                <label htmlFor="HOD">HOD</label>
+                                <input onClick={handleChange} type="radio" name="role" value='Staff' id='Staff' className='ml-3' required/>
+                                <label htmlFor="Staff">Staff</label>
+                            </div>
+                        </div>
+                        <div className="col-md-8 offset-2 border border-top-0">
+                            <div className=" row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="fname">First Name</label>
+                                    <input onChange={handleChange} value={data.fname} type="text" name="fname" id="fname" className='form-control' required/>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="lname">Last Name</label>
+                                    <input onChange={handleChange} value={data.lname} type="text" name="lname" id="lname" className='form-control'required />
+                                </div>
+                            </div>
+                            <div className=" row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="email">Email</label>
+                                    <input onChange={handleChange} value={data.email} type="email" name="email" id="email" className='form-control' required/>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="contact">Contact</label>
+                                    <input onChange={handleChange} value={data.contact} type="number" name="contact" id="contact" className='form-control' required/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-6 form-group">
+                                    <label htmlFor="Department">Department</label>
+                                    <select onClick={handleChange} name="Department" className='form-control' id="Department" >Department
+                                        <option value="Sales">Sales</option>
+                                        <option value="Purchase">Purchase</option>
+                                        <option value="Testing">Testing</option>
+                                        <option value="Development">Development</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className=" row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="username">Username</label>
+                                    <input onChange={handleChange} value={data.username} type="text" name="username" id="username" className='form-control' required/>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="password">Password</label>
+                                    <input onChange={handleChange} value={data.password} type="password" name="password" id="password" className='form-control' required/>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <button className="btn btn lg btn-primary form-control" type='submit'>Register</button>
+                            </div>
+                            <div className="form-group text-center">
+                                <p>Already Registered? <button onClick={()=>navigate("/login")} className='text-primary border-0 text-white'  >Login</button></p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </>
+    )
+}
+
+export default Register
