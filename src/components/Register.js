@@ -100,7 +100,7 @@ function Register() {
                                 <button className="btn btn lg btn-primary form-control" type='submit'>Register</button>
                             </div>
                             <div className="form-group text-center">
-                                <p>Already Registered? <button onClick={()=>navigate("/login")} className='text-primary border-0 text-white'  >Login</button></p>
+                                <p>Already Registered? <button onClick={()=>navigate("/login")} className='text-primary border-0 bg-white'  >Login</button></p>
                             </div>
                         </div>
                     </div>

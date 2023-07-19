@@ -19,15 +19,18 @@ function Login( ) {
         users.map((ele)=>{
             if(ele.username===data.username && ele.password===data.password){
                 localStorage.setItem("signin",JSON.stringify(ele))
-                if(signin?.role==="HOD"){
-                    navigate("/dashboard/hod")
-                }else if (signin?.role==="Staff"){
-                    navigate("/dashboard/staff")
-                }else{
-                    alert("Username or Password is incorrect")
-                }
             }
         })
+        setTimeout(()=>{
+            if(signin?.role==="HOD"){
+                navigate("/dashboard/hod")
+            }else if (signin?.role==="Staff"){
+                navigate("/dashboard/staff")
+            }else{
+                alert("Username or Password is incorrect")
+            }
+        },1000)
+        
     }
    
     
@@ -36,6 +39,9 @@ function Login( ) {
             <div className='row'>
                 <div className="col-md-6 offset-3 ">
                     <form className='border shadow p-3' onSubmit={handleSubmit}>
+                        <div className="text-center">
+                            <h2 className='text-primary'>Login</h2>
+                        </div>
                         <div className="form-group ">
                             <label htmlFor="username">Username</label>
                             <input onChange={handleChange} value={data.username} type="text" name="username" id="username" className='form-control' required/>
