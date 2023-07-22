@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 
 function Login( ) {
     const navigate=useNavigate()
-    const signin=JSON.parse(localStorage.getItem("signin"))  
     const users=JSON.parse(localStorage.getItem("users"))
     const[data,setData]=useState({
         username:"",
@@ -14,14 +13,24 @@ function Login( ) {
         const { name, value } = e.target;
         setData((pre) => ({ ...pre, [name]: value }))
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleBlur=()=>{
         users.map((ele)=>{
             if(ele.username===data.username && ele.password===data.password){
                 localStorage.setItem("signin",JSON.stringify(ele))
             }
         })
-        setTimeout(()=>{
+        console.log(data)
+
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // users.map((ele)=>{
+        //     if(ele.username===data.username && ele.password===data.password){
+        //         localStorage.setItem("signin",JSON.stringify(ele))
+        //     }
+        // })
+    const signin=JSON.parse(localStorage.getItem("signin"))  
+
             if(signin?.role==="HOD"){
                 navigate("/dashboard/hod")
             }else if (signin?.role==="Staff"){
@@ -29,15 +38,14 @@ function Login( ) {
             }else{
                 alert("Username or Password is incorrect")
             }
-        },1000)
         
     }
    
     
     return (
         <div className="container p-5">
-            <div className='row'>
-                <div className="col-md-6 offset-3 ">
+            <div className='row '>
+                <div className="col-md-6  mx-auto">
                     <form className='border shadow p-3' onSubmit={handleSubmit}>
                         <div className="text-center">
                             <h2 className='text-primary'>Login</h2>
@@ -48,7 +56,7 @@ function Login( ) {
                         </div>
                         <div className="form-group ">
                             <label htmlFor="password">Password</label>
-                            <input onChange={handleChange} value={data.password} type="password" name="password" id="password" className='form-control'required />
+                            <input onChange={handleChange} onBlur={handleBlur} value={data.password} type="password" name="password" id="password" className='form-control'required />
                         </div>
                         <div className="form-group">
                             <button className="btn btn lg btn-primary form-control" type='submit'>Login</button>

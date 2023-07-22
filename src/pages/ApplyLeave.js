@@ -5,12 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 function ApplyLeave() {
   const [showForm,setShowForm]=useState(false)
+  const signin=JSON.parse(localStorage.getItem("signin"))
 
   const [data, setData] = useState({
       from: '',
       to: "",
       reason: "",
-      Status: "Pending"
+      Status: "Pending",
+      userName:`${signin.fname} ${signin.lname}`
   })
   const [dataArray, setDataArray] = useState(()=>JSON.parse(localStorage.getItem("leaveDetails")) || [])
   const handleChange = (e) => {
@@ -29,13 +31,14 @@ function ApplyLeave() {
       setDataArray((pre) => [...pre, {...data,id:uuidv4()}])
       console.log(dataArray)
       setShowForm(false)
-      console.log( data.from,typeof  data.from)
+      console.log( data,typeof  data)
       setData({
           from: '',
           to: "",
           reason: "",
-          Status: "Pending"
-
+          Status: "Pending",
+          userName:`${signin.fname} ${signin.lname}`
+     
          
       })
   }
@@ -69,7 +72,7 @@ function ApplyLeave() {
          
           
             {showForm &&     <div className="row">
-                <div className="col-md-6 offset-3 border shadow p-5">
+                <div className="col-md-6 mx-auto border shadow p-5">
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <h4 >Leave Details</h4>
@@ -140,9 +143,10 @@ function ApplyLeave() {
             </div>
             <div className="row">
                 {dataArray?.map((ele) => {
-                    return <>
+                    if(ele.userName===`${signin.fname} ${signin.lname}`){
+                        return <>
 
-                        <div className="col-md-3 offset-1 shadow border p-3 mb-4" style={{backgroundColor:"white"}}>
+                        <div className="col-md-3 mr-1 shadow border p-3 mb-4" style={{backgroundColor:"white"}}>
                             <p className='mb-0'><strong>Leave for</strong> {moment().format(ele.from)}</p>
                             <p>Number of days- {getDays(ele.from,ele.to)}</p>
                             <h5>Reason:</h5>
@@ -152,6 +156,8 @@ function ApplyLeave() {
                         </div>
 
                     </>
+                    }
+                   
                 })}
 
             </div>
