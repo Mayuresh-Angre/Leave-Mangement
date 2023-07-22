@@ -35,6 +35,7 @@ function Register() {
             username: "",
             password: ""
         })
+        alert("Registation successfully Done...!")
     }
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))

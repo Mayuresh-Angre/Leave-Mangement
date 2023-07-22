@@ -24,16 +24,14 @@ function Login( ) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // users.map((ele)=>{
-        //     if(ele.username===data.username && ele.password===data.password){
-        //         localStorage.setItem("signin",JSON.stringify(ele))
-        //     }
-        // })
+        
     const signin=JSON.parse(localStorage.getItem("signin"))  
 
             if(signin?.role==="HOD"){
+                alert("Login successfully...!")
                 navigate("/dashboard/hod")
             }else if (signin?.role==="Staff"){
+                alert("Login successfully...!")
                 navigate("/dashboard/staff")
             }else{
                 alert("Username or Password is incorrect")
