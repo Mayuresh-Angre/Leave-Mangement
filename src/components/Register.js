@@ -13,12 +13,20 @@ function Register() {
         username: "",
         password: ""
     })
+   
     const navigate = useNavigate()
     const [users, setUsers] = useState(() => JSON.parse(localStorage.getItem("users")) || []
     )
+    const  usernameArray=users?.map((ele)=>ele.username)
+    console.log(usernameArray)
     const handleChange = (e) => {
         const { name, value } = e.target;
         setData((pre) => ({ ...pre, [name]: value }))
+       
+    }
+    const usernameCheck=(e)=>{
+      
+        console.log(e)
     }
     const handleRegister = (e) => {
         e.preventDefault();
@@ -87,7 +95,9 @@ function Register() {
                             <div className=" row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="username">Username</label>
-                                    <input onChange={handleChange} value={data.username} type="text" name="username" id="username" className='form-control' required />
+                                    <input onChange={ handleChange } value={data.username} type="text" name="username" id="username" className='form-control' required />
+                                    {usernameArray?.filter((ele)=>ele===data.username).length>0 ?<p style={{color:"red"}}>UserName already exits.</p>:null}
+                                    
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label htmlFor="password">Password</label>
